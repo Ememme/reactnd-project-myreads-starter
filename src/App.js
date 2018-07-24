@@ -10,16 +10,16 @@ class BooksApp extends React.Component {
   }
   componentDidMount() {
     BooksAPI.getAll().then((books) => {
-        this.setState({books})
+        this.setState({books: books})
     })
   }
   render() {
-
+    console.log(this.state.books)
     return (
       <div className="app">
           <div className="list-books">
-            <Library />
-            <BookList />
+            <Library  />
+            <BookList books={this.state.books} />
 
             <div className="open-search">
               <a onClick={() => this.setState({ showSearchPage: true })}>Add a book</a>
