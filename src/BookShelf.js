@@ -3,9 +3,8 @@ import Book from './Book'
 
 class BookShelf extends Component {
   render() {
+
     return(
-      <div className="bookshelf">
-        <h2 className="bookshelf-title">This should be changed</h2>
         <div className="bookshelf-books">
           <ol className="books-grid">
             <Book />
@@ -13,7 +12,6 @@ class BookShelf extends Component {
             <Book />
           </ol>
         </div>
-      </div>
     )
   }
 }
