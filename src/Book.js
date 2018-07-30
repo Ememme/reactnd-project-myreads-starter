@@ -1,20 +1,28 @@
 import React, { Component } from 'react'
 import BookCategoryChanger from './BookCategoryChanger'
 
-class Book extends Component {
-  render() {
+const Book = props => {
+
+    console.log(this.props)
+    const {filteredBook} = props
+    const {title, id, shelf} = filteredBook
+    console.log(filteredBook)
+    const author = filteredBook.authors ? filteredBook.authors : []
+    const cover = filteredBook.imageLinks ? filteredBook.imageLinks.thumbnail || filteredBook.imageLinks.smallThumbnail : null
+
+
     return(
-      <li>
+      <li key={id}>
         <div className="book">
           <div className="book-top">
-            <div className="book-cover" style={{ width: 128, height: 188, backgroundImage: '' }}></div>
+            <div className="book-cover" style={{ width: 128, height: 188, backgroundImage: `url(${cover})`}}></div>
             <BookCategoryChanger />
           </div>
-          <div className="book-title"></div>
-          <div className="book-authors"></div>
+          <div className="book-title">{title}</div>
+          <div className="book-authors">{author}</div>
         </div>
       </li>
     )
-  }
+
 }
 export default Book
