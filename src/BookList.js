@@ -3,7 +3,7 @@ import BookShelf from './BookShelf'
 
 // Stateless Functional Component
 const BookList = (props) => {
-  const {books} = props
+  const { books, changeShelf } = props
   const shelves = [
     {
       type: 'currentlyReading',
@@ -17,19 +17,20 @@ const BookList = (props) => {
     }
   ]
 
+
   return (<div className="list-books-content">
     {
       shelves.map((shelf) => {
         // finding book by category in the originally fetched array
         const filteredBooks = books.filter(book => book.shelf === shelf.type)
         console.log(filteredBooks)
-        
+
         return (<div key={shelf.type}>
           <div className="bookshelf">
             <h2 className="bookshelf-title">{shelf.title}
             </h2>
             <div className="bookshelf-books">
-              <BookShelf filteredBooks={filteredBooks}/>
+              <BookShelf filteredBooks={filteredBooks} changeShelf={props.changeShelf}/>
             </div>
           </div>
         </div>)
