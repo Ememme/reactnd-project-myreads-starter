@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import BookShelf from './BookShelf'
+import PropTypes from 'prop-types'
 
 // Stateless Functional Component
 const BookList = (props) => {
@@ -37,6 +38,12 @@ const BookList = (props) => {
       })
     }
   </div>)
+}
+
+BookList.propTypes = {
+    // BookAPI fetches an array
+    books: PropTypes.array.isRequired,
+    changeShelf: PropTypes.func.isRequired
 }
 
 export default BookList

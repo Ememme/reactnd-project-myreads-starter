@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import BookCategoryChanger from './BookCategoryChanger'
+import PropTypes from 'prop-types'
 
 const Book = props => {
 
-    console.log(this.props)
+    console.log(props)
     const {filteredBook} = props
     const {title, id, shelf} = filteredBook
     console.log(filteredBook.shelf)
@@ -24,5 +25,11 @@ const Book = props => {
       </li>
     )
 
+}
+
+Book.propTypes = {
+    // Book instance is an object
+    filteredBook: PropTypes.object.isRequired,
+    changeShelf: PropTypes.func.isRequired
 }
 export default Book

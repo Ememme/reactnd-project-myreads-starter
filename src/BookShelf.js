@@ -22,4 +22,10 @@ class BookShelf extends Component {
   }
 }
 
+BookShelf.propTypes = {
+  // BookAPI fetches an array of objects
+  filteredBooks: PropTypes.array.isRequired,
+  changeShelf: PropTypes.func.isRequired
+}
+
 export default BookShelf
