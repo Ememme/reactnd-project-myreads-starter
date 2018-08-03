@@ -28,7 +28,7 @@ const BookList = (props) => {
 
         return (<div key={shelf.type}>
           <div className="bookshelf">
-            <h2 className="bookshelf-title">{shelf.title}
+            <h2 className="bookshelf-title">{shelf.title}<span>: {filteredBooks.length}</span>
             </h2>
             <div className="bookshelf-books">
               <BookShelf filteredBooks={filteredBooks} changeShelf={props.changeShelf}/>
