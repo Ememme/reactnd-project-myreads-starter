@@ -28,11 +28,15 @@ class BooksApp extends React.Component {
     // console.log(book, changedShelf)
     book.shelf = changedShelf
     // console.log(changedShelf)
-
+    // BookAPI sends updated data to server so that it persists between page refreshes
+    BooksAPI.update(book, changedShelf).then(() => {
       this.setState(state => ({
         books: state.books.filter(item => item.id !== book.id).concat([book])
       }))
+   })
+
   }
+
 
   // Based on user input in the search field, an event listener invokes the updateQuery() function on every onChange event.
   // updateQuery() then calls setState(), merging in the new state to update the component's internal state.
@@ -53,10 +57,18 @@ class BooksApp extends React.Component {
             console.log(this.state.searchResults)
             this.setState({ searchResults: books })
             console.log(this.state.searchResults)
+
           }
         })
       }
+      // this.setState({ query: ''})
+      // } else {
+      //   // reset query input field
+      //
+      // }
       // BooksAPI.search(query).then(books => console.log(books.length, books));
+      // refresh the form
+    // event.currentTarget.reset();
     };
 
   render() {
