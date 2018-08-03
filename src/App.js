@@ -8,7 +8,9 @@ import SearchBooks from './SearchBooks';
 
 class BooksApp extends React.Component {
   state = {
-    books: []
+    books: [],
+    query: '',
+    searchResults: []
   }
 
   componentDidMount() {
@@ -17,27 +19,58 @@ class BooksApp extends React.Component {
     })
   }
 
+  // /**
+  // * @description Changes position of a book between currentlyReading/wantToRead/Read
+  // * @param {object} book - clicked book
+  // * @param {string} value of a new shelf
+  // */
   changeShelf = (book, changedShelf) => {
-    // /**
-    // * @description Changes position of a book between currentlyReading/wantToRead/Read
-    // * @param {object} book - clicked book
-    // * @param {string} value of a new shelf
-    // */
-    console.log(book, changedShelf)
+    // console.log(book, changedShelf)
     book.shelf = changedShelf
-    console.log(changedShelf)
+    // console.log(changedShelf)
 
       this.setState(state => ({
         books: state.books.filter(item => item.id !== book.id).concat([book])
       }))
-
   }
+
+  // Based on user input in the search field, an event listener invokes the updateQuery() function on every onChange event.
+  // updateQuery() then calls setState(), merging in the new state to update the component's internal state.
+  // Then searchResult is called with the value of query, and returns book objects
+    updateQuery = query => {
+      // Update query based on user input
+      this.setState({ query: query })
+      // run search based on query
+      this.searchResult(query)
+    }
+
+    searchResult = query => {
+      if(query) {
+        // debugger
+        BooksAPI.search(query).then(books => {
+          if(books instanceof Array) {
+            console.log(books, books.length)
+            console.log(this.state.searchResults)
+            this.setState({ searchResults: books })
+            console.log(this.state.searchResults)
+          }
+        })
+      }
+      // BooksAPI.search(query).then(books => console.log(books.length, books));
+    };
 
   render() {
     // console.log(this.state.books)
     return (
       <div className="app">
-        <Route path="/search" component={SearchBooks}/>
+        <Route path="/search" render={()=> (
+          <SearchBooks
+            foundBooks={this.state.searchResults}
+            query={this.state.query}
+            updateQuery={this.updateQuery}
+            searchResult={this.searchResult}
+            changeShelf={this.changeShelf}/>
+        )}/>
         <Route exact path="/" render={() => (
           <div className="list-books">
             <Library  />
