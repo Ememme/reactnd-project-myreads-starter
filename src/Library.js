@@ -1,13 +1,13 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-class Library extends Component {
-  render() {
+const Library = () => {
+
     return(
       <div className="list-books-title">
         <h1>MyReads</h1>
       </div>
     )
-  }
+
 }
 
 export default Library
