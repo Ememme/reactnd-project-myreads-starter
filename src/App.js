@@ -29,10 +29,12 @@ class BooksApp extends React.Component {
     book.shelf = changedShelf
     // console.log(changedShelf)
     // BookAPI sends updated data to server so that it persists between page refreshes
-    BooksAPI.update(book, changedShelf).then(() => {
+    BooksAPI.update(book, changedShelf)
+    .then(() => {
       this.setState(state => ({
         books: state.books.filter(item => item.id !== book.id).concat([book])
       }))
+
    })
 
   }
@@ -59,8 +61,14 @@ class BooksApp extends React.Component {
             console.log(this.state.searchResults)
 
           }
-        })
+        }).catch(error => console.log(error));
+      } else {
+          this.setState({
+            query: '',
+            searchResults: []
+          })
       }
+
       // this.setState({ query: ''})
       // } else {
       //   // reset query input field
@@ -77,6 +85,7 @@ class BooksApp extends React.Component {
       <div className="app">
         <Route path="/search" render={()=> (
           <SearchBooks
+            mainPageBooks={this.state.books}
             foundBooks={this.state.searchResults}
             query={this.state.query}
             updateQuery={this.updateQuery}

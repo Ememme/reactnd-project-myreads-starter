@@ -5,10 +5,19 @@ import Book from './Book'
 
 class SearchBooks extends Component  {
 
+  setShelf = (filteredBook, foundBook) => {
+    if(foundBook.shelf === 'undefined') {
+      filteredBook.shelf = 'none'
+    }
+    console.log(filteredBook.title)
+  }
+  // console.log(foundBook.shelf)
   render() {
-    const {query, searchResult, foundBooks} = this.props
+    const {query, updateQuery, searchResult, foundBooks, mainPageBooks} = this.props
     // const {foundBooks} = this.state
     console.log(foundBooks)
+    console.log(mainPageBooks);
+    const setDefaultShelf = "none";
     return(
       <div className="search-books">
 
@@ -32,19 +41,23 @@ class SearchBooks extends Component  {
         </div>
         <div className="search-books-results">
           <p>Number of found books: {this.props.foundBooks.length}</p>
-          {query && searchResult && (
+          <div className="results">
+          {query.length > 0 && foundBooks !==0 && (
             <ol className="books-grid">
-
                 {this.props.foundBooks.map((foundBook) => (
 
                   <Book
                     filteredBook={foundBook}
                     key={foundBook.id}
                     changeShelf={this.props.changeShelf}
+                    updateQuery={this.props.updateQuery}
+                    setShelf={setDefaultShelf}
+                    shelf={foundBook.shelf}
                   />
                 ))}
             </ol>
           )}
+          </div>
         </div>
       </div>
     )
