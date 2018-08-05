@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import Book from './Book'
 
 
-const SearchBooks = props =>  {
-  // console.log(foundBook.shelf)
-
+class SearchBooks extends Component  {
+  
+    render() {
     const {query, foundBooks } = this.props
 
     return(
@@ -50,6 +50,7 @@ const SearchBooks = props =>  {
       </div>
     )
   }
+}
 
 
 
