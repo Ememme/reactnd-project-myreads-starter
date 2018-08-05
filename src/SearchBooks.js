@@ -4,7 +4,7 @@ import Book from './Book'
 
 
 class SearchBooks extends Component  {
-  
+
     render() {
     const {query, foundBooks } = this.props
 
@@ -15,7 +15,7 @@ class SearchBooks extends Component  {
 
           <Link to="/" className="close-search">Close</Link>
           <div className="search-books-input-wrapper">
-            {JSON.stringify(this.props.query)}
+            {/* {JSON.stringify(this.props.query)} */}
             {/*
               NOTES: The search from BooksAPI is limited to a particular set of search terms.
               You can find these search terms here:
