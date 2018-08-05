@@ -1,13 +1,14 @@
-import React, { Component } from 'react'
+import React from 'react'
 import BookCategoryChanger from './BookCategoryChanger'
 import PropTypes from 'prop-types'
+// import { formatView} from './helpers'
 
 const Book = props => {
 
-    console.log(props)
+    // console.log(props)
     const {filteredBook} = props
-    const {title, id, shelf} = filteredBook
-    console.log(filteredBook.shelf)
+    const {title, id } = filteredBook
+    // console.log(filteredBook.shelf)
     const author = filteredBook.authors ? filteredBook.authors : []
     const cover = filteredBook.imageLinks ? filteredBook.imageLinks.thumbnail || filteredBook.imageLinks.smallThumbnail : null
 
