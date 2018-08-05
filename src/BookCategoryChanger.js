@@ -1,13 +1,11 @@
-import React, {Component} from 'react'
+import React from 'react'
 
-
-class BookCategoryChanger extends Component {
-  render() {
-    console.log(this.props.bookInfo)
+const BookCategoryChanger = props =>  {
+  
     // Set shelf value to none if it's not defined
-    const shelfValue = this.props.bookInfo.shelf? this.props.bookInfo.shelf : 'move'
+    const shelfValue = props.bookInfo.shelf? props.bookInfo.shelf : 'none'
     return (<div className="book-shelf-changer">
-      <select onChange={(event) => {this.props.changeShelf(this.props.bookInfo, event.target.value)} } value={shelfValue}>
+      <select onChange={(event) => {props.changeShelf(props.bookInfo, event.target.value)} } value={shelfValue}>
         <option value="move" disabled="disabled">Move to...</option>
         <option value="currentlyReading">Currently Reading</option>
         <option value="wantToRead">Want to Read</option>
@@ -16,6 +14,6 @@ class BookCategoryChanger extends Component {
       </select>
     </div>)
   }
-}
+
 
 export default BookCategoryChanger
