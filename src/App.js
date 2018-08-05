@@ -19,24 +19,22 @@ class BooksApp extends React.Component {
     })
   }
 
-  // /**
-  // * @description Changes position of a book between currentlyReading/wantToRead/Read
-  // * @param {object} book - clicked book
-  // * @param {string} value of a new shelf
-  // */
+
+  // @description Changes position of a book between currentlyReading/wantToRead/Read shelves
+  // @param {object} book - clicked book
+  // @param {string} value of a new shelf
+
   changeShelf = (book, changedShelf) => {
-    // console.log(book, changedShelf)
     book.shelf = changedShelf
-    // console.log(changedShelf)
+
     // BookAPI sends updated data to server so that it persists between page refreshes
     BooksAPI.update(book, changedShelf)
     .then(() => {
+      // If the array of books on the main page does not contain the book already, the new book object is merged and a new array is returned
       this.setState(state => ({
         books: state.books.filter(item => item.id !== book.id).concat([book])
       }))
-
    })
-
   }
 
 
@@ -45,42 +43,43 @@ class BooksApp extends React.Component {
   // Then searchResult is called with the value of query, and returns book objects
     updateQuery = query => {
       // Update query based on user input
-      this.setState({ query: query })
+      this.setState({ query })
       // run search based on query
       this.searchResult(query)
     }
 
     searchResult = query => {
-      if(query) {
-        // debugger
+      if(query.length > 0) {
         BooksAPI.search(query).then(books => {
           if(books instanceof Array) {
-            console.log(books, books.length)
-            console.log(this.state.searchResults)
-            this.setState({ searchResults: books })
-            console.log(this.state.searchResults)
-
-          }
-        }).catch(error => console.log(error));
-      } else {
+            books.map(book => (
+              // For every book from the main page, filtering out books that appear in search results and then assig shelf value to searched book. Not affected searched books will have a value of 'none'
+              this.state.books.filter((item) => item.id === book.id)
+                              .map(item => book.shelf = item.shelf)
+            )
+          )
+          this.setState({
+            searchResults: books,
+          })
+        } else {
           this.setState({
             query: '',
             searchResults: []
           })
+        }
+        // Catching error related to BookAPI, f.ex. network problem
+        }).catch(error => console.log(error));
+        // Empty screen
+      } else {
+        this.setState({
+          query: '',
+          searchResults: []
+        })
       }
-
-      // this.setState({ query: ''})
-      // } else {
-      //   // reset query input field
-      //
-      // }
-      // BooksAPI.search(query).then(books => console.log(books.length, books));
-      // refresh the form
-    // event.currentTarget.reset();
     };
 
   render() {
-    // console.log(this.state.books)
+
     return (
       <div className="app">
         <Route path="/search" render={()=> (
@@ -89,7 +88,6 @@ class BooksApp extends React.Component {
             foundBooks={this.state.searchResults}
             query={this.state.query}
             updateQuery={this.updateQuery}
-            searchResult={this.searchResult}
             changeShelf={this.changeShelf}/>
         )}/>
         <Route exact path="/" render={() => (
